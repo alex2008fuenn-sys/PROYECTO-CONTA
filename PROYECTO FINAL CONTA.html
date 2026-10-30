@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Académico de Contabilidad Administrativa | UMG</title>
+  <style>
+    :root {
+      --umg-blue: #002B49;
+      --umg-blue-light: #1A4066;
+      --umg-red: #C8102E;
+      --umg-red-hover: #A00C24;
+      --bg-white: #FFFFFF;
+      --bg-light: #F8FAFC;
+      --text-dark: #0F172A;
+      --text-muted: #334155;
+      --card-shadow: 0 10px 25px rgba(0, 43, 73, 0.1);
+      --success: #10B981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #F1F5F9;
+      color: var(--text-dark);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ENCABEZADO INSTITUCIONAL */
+    header {
+      background: linear-gradient(135deg, var(--umg-blue) 0%, #001829 70%, var(--umg-red) 100%);
+      color: var(--bg-white);
+      padding: 25px 20px;
+      text-align: center;
+      border-bottom: 5px solid var(--umg-red);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .header-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .header-logo {
+      width: 75px;
+      height: auto;
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
+    }
+
+    .header-text h1 {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .header-text p {
+      color: #E2E8F0;
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    /* NAVEGACIÓN INTERACTIVA */
+    nav {
+      background: var(--bg-white);
+      box-shadow: 0 4px 10px rgba(0, 43, 73, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px;
+      flex-wrap: wrap;
+      border-bottom: 3px solid var(--umg-blue);
+    }
+
+    .nav-btn {
+      background: var(--bg-white);
+      border: 2px solid var(--umg-blue);
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--umg-blue);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      background: var(--umg-red);
+      border-color: var(--umg-red);
+      color: var(--bg-white);
+    }
+
+    .nav-btn.active {
+      background: var(--umg-blue);
+      border-color: var(--umg-red);
+      color: var(--bg-white);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 25px auto;
+      padding: 0 15px;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .card {
+      background: var(--bg-white);
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: var(--card-shadow);
+      border-top: 4px solid var(--umg-red);
+    }
+
+    .card-header-with-logo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #F1F5F9;
+      padding-bottom: 10px;
+      margin-bottom: 18px;
+    }
+
+    .card h2 {
+      color: var(--umg-blue);
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .card-logo {
+      width: 35px;
+      height: auto;
+    }
+
+    .card h3 {
+      color: var(--umg-red);
+      margin: 18px 0 10px 0;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    p {
+      margin-bottom: 12px;
+      color: var(--text-muted);
+      font-size: 14px;
+      text-align: justify;
+    }
+
+    ul {
+      margin-left: 20px;
+      margin-bottom: 15px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    ul li {
+      margin-bottom: 6px;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+      margin: 15px 0;
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      background: var(--bg-white);
+    }
+
+    th, td {
+      padding: 10px 12px;
+      border: 1px solid #E2E8F0;
+      font-size: 13px;
+    }
+
+    th {
+      background: var(--umg-blue);
+      color: var(--bg-white);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 11px;
+    }
+
+    tr:nth-child(even) {
+      background: #F8FAFC;
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      color: var(--umg-blue);
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #CBD5E1;
+      border-radius: 6px;
+      font-size: 14px;
+      outline: none;
+      background: #FAFAFA;
+    }
+
+    input[type="number"]:focus {
+      border-color: var(--umg-red);
+      background: var(--bg-white);
+    }
+
+    .btn-calc {
+      background: var(--umg-red);
+      color: var(--bg-white);
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    .btn-calc:hover {
+      background: var(--umg-red-hover);
+    }
+
+    .result-box {
+      margin-top: 10px;
+      padding: 15px;
+      background: #F8FAFC;
+      border-left: 4px solid var(--umg-red);
+      border-radius: 6px;
+      font-size: 13px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .gallery-card {
+      background: #FAFAFA;
+      border: 2px dashed #CBD5E1;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .gallery-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--umg-red);
+    }
+
+    .gallery-img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .upload-btn {
+      background: var(--umg-blue);
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    footer {
+      background: var(--umg-blue);
+      color: var(--bg-white);
+      padding: 20px;
+      text-align: center;
+      margin-top: 40px;
+      border-top: 4px solid var(--umg-red);
+    }
+
+    .footer-content {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-logo {
+      width: 45px;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ENCABEZADO INSTITUCIONAL -->
+  <header>
+    <div class="header-content">
+      <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg/1280px-Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg.png?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=thumbnail" alt="Escudo UMG" class="header-logo">
+      <div class="header-text">
+        <h1>Contabilidad Administrativa y Control Gerencial</h1>
+        <p>Universidad Mariano Gálvez de Guatemala • Facultad de Ingeniería en Sistemas</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- BARRA DE NAVEGACIÓN -->
+  <nav>
+    <button class="nav-btn active" data-target="teoria">📚 Marco Teórico</button>
+    <button class="nav-btn" data-target="rentabilidad">📈 Rentabilidad & Eficiencia</button>
+    <button class="nav-btn" data-target="flujo">💵 Flujo de Efectivo</button>
+    <button class="nav-btn" data-target="comprar">🏭 Comprar vs Producir</button>
+    <button class="nav-btn" data-target="patrimonial">⚖️ Análisis Patrimonial</button>
+    <button class="nav-btn" data-target="proyeccion">📊 VAN & TIR Proyección</button>
+    <button class="nav-btn" data-target="anexos">📸 Anexos / Evidencia</button>
+  </nav>
+
+  <main>
+    <!-- BLOQUE 1: MARCO TEÓRICO COMPLETO -->
+    <section id="teoria" class="tab-content active">
+      <div class="card">
+        <div class="card-header-with-logo">
+          <h2>1. Fundamentos Teóricos de la Contabilidad</h2>
+          <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg/1280px-Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg.png?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=thumbnail" alt="Escudo UMG" class="card-logo">
+        </div>
+        
+        <p>La contabilidad es el lenguaje universal de los negocios y el principal sistema de información de cualquier empresa. Su evolución ha dejado atrás la simple teneduría de libros para convertirse en una herramienta analítica indispensable que garantiza la supervivencia y el crecimiento corporativo. Para satisfacer las distintas necesidades de información, tanto del mercado como de los directivos, el ecosistema contable se divide en dos ramas fundamentales, autónomas pero profundamente interconectadas: la Contabilidad Financiera y la Contabilidad Administrativa.</p>
+
+        <h3>La Contabilidad Financiera: El rostro público de la empresa</h3>
+        <p>Es el sistema de información estructurado y estandarizado que tiene como objetivo principal proporcionar datos históricos sobre la situación económica, el desempeño financiero y los flujos de efectivo de una organización a terceras personas externas. Su propósito es reducir la asimetría de información entre la empresa y el mercado.</p>
+
+        <p><strong>Características y Marco Normativo:</strong></p>
+        <ul>
+          <li><strong>Usuarios principales:</strong> Está dirigida a actores que proveen capital o supervisan a la empresa, tales como inversionistas, accionistas, acreedores, instituciones bancarias, proveedores, auditores externos y autoridades fiscales.</li>
+          <li><strong>Regulación estricta:</strong> Su preparación no es libre; está estrictamente regulada por normativas internacionales y locales, como las Normas Internacionales de Información Financiera (NIIF) o los Principios de Contabilidad Generalmente Aceptados (PCGA). Esto garantiza que la información sea comparable, verificable y libre de sesgos.</li>
+          <li><strong>Perspectiva temporal histórica:</strong> Su naturaleza es retrospectiva. Registra, clasifica y resume hechos económicos que ya ocurrieron para evaluar el desempeño pasado y rendir cuentas sobre la gestión de los recursos.</li>
+          <li><strong>Enfoque global:</strong> Presenta la información de la empresa consolidada como una entidad económica única, sin entrar en el detalle operativo de cada departamento o línea de producción.</li>
+        </ul>
+
+        <p><strong>Entregables Clave (Estados Financieros Básicos):</strong></p>
+        <ul>
+          <li><strong>1. Balance General (Estado de Situación Financiera):</strong> Muestra una fotografía de lo que la empresa tiene (activos), lo que debe (pasivos) y lo que pertenece a los dueños (patrimonio) en una fecha específica.</li>
+          <li><strong>2. Estado de Resultados:</strong> Detalla los ingresos, costos y gastos durante un periodo, determinando si la empresa generó utilidad o pérdida.</li>
+          <li><strong>3. Estado de Flujos de Efectivo:</strong> Explica las entradas y salidas de dinero en efectivo, vital para evaluar la liquidez y solvencia.</li>
+          <li><strong>4. Estado de Cambios en el Patrimonio:</strong> Refleja las variaciones en las aportaciones de los socios y las utilidades retenidas.</li>
+        </ul>
+
+        <h3>La Contabilidad Administrativa: El motor interno de decisiones</h3>
+        <p>También conocida como contabilidad gerencial, es el sistema de información al servicio de las necesidades de la administración interna de la empresa. Su diseño es flexible y está orientado a facilitar las funciones clave del proceso administrativo: planeación, control y toma de decisiones tácticas y estratégicas.</p>
+
+        <p><strong>Características y Flexibilidad Operativa:</strong></p>
+        <ul>
+          <li><strong>Usuarios principales:</strong> Directores generales, gerentes de área, jefes de departamento y supervisores operativos. La información es estrictamente confidencial.</li>
+          <li><strong>Ausencia de regulación externa:</strong> No está sujeta a normas contables (no usa NIIF). Se adapta de forma dinámica a las necesidades, cultura, tamaño y diseño organizacional de cada empresa.</li>
+          <li><strong>Perspectiva prospectiva:</strong> Su mirada está puesta en el futuro. Aunque utiliza bases de datos históricos, su verdadero valor radica en la anticipación a través de simulaciones, proyecciones y presupuestos.</li>
+          <li><strong>Enfoque segmentado y granular:</strong> Analiza la empresa por partes (líneas de producto, territorios, departamentos o sucursales) para identificar de manera quirúrgica qué áreas son rentables, dónde hay cuellos de botella y qué costos deben optimizarse.</li>
+        </ul>
+
+        <p><strong>Herramientas y Entregables Clave:</strong></p>
+        <ul>
+          <li><strong>Presupuestos y pronósticos:</strong> Cuantificación de los planes a corto y largo plazo (presupuesto maestro, presupuesto de ventas, flujo de caja proyectado).</li>
+          <li><strong>Modelo Costo-Volumen-Utilidad:</strong> Análisis del punto de equilibrio (cuánto se debe vender para no perder ni ganar) y márgenes de contribución.</li>
+          <li><strong>Sistemas de Costeo:</strong> Determinación exacta de cuánto cuesta fabricar un producto o brindar un servicio (ej. Costeo Basado en Actividades - ABC) para fijar precios competitivos.</li>
+          <li><strong>Evaluación de desempeño:</strong> Reportes de variaciones que comparan lo presupuestado contra lo ejecutado, permitiendo aplicar medidas correctivas inmediatas.</li>
+        </ul>
+
+        <h3>Cuadro Comparativo de Dimensiones Estratégicas</h3>
+        <p>Para una comprensión técnica de los límites y alcances de ambas disciplinas, las siguientes dimensiones establecen sus diferencias exactas:</p>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Dimensión de Análisis</th>
+                <th>Contabilidad Financiera</th>
+                <th>Contabilidad Administrativa</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Audiencia Principal</strong></td>
+                <td>Externa (Bancos, Inversionistas, Estado)</td>
+                <td>Interna (Gerentes, Directores, Supervisores)</td>
+              </tr>
+              <tr>
+                <td><strong>Obligatoriedad</strong></td>
+                <td>Obligatoria (exigida por ley comercial y fiscal)</td>
+                <td>Opcional (depende de la visión de la gerencia)</td>
+              </tr>
+              <tr>
+                <td><strong>Regulación y Formato</strong></td>
+                <td>Rígida (Sujeta a NIIF / PCGA)</td>
+                <td>Flexible (Diseño libre y a la medida)</td>
+              </tr>
+              <tr>
+                <td><strong>Dimensión Temporal</strong></td>
+                <td>Histórica (Registra el pasado de forma objetiva)</td>
+                <td>Proyectiva (Anticipa el futuro, presupuestos)</td>
+              </tr>
+              <tr>
+                <td><strong>Nivel de Detalle</strong></td>
+                <td>Global (Toda la empresa como un solo ente)</td>
+                <td>Segmentado (Por áreas, productos o líneas)</td>
+              </tr>
+              <tr>
+                <td><strong>Tipo de Datos Utilizados</strong></td>
+                <td>Estrictamente monetarios, exactos y auditables</td>
+                <td>Monetarios y no monetarios (horas de trabajo, kg de material, cuotas de mercado, tiempos)</td>
+              </tr>
+              <tr>
+                <td><strong>Objetivo Central</strong></td>
+                <td>Informar sobre la rentabilidad, liquidez y riesgo</td>
+                <td>Proveer inteligencia de negocios para la planeación estratégica y el control operativo</td>
+              </tr>
+              <tr>
+                <td><strong>Frecuencia de Reporte</strong></td>
+                <td>Periódica (Mensual, trimestral, anual)</td>
+                <td>Dinámica (Diaria, semanal, o cuando se requiera)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Ambas disciplinas, lejos de competir, generan una sinergia indispensable para la salud corporativa. La contabilidad financiera se apoya en los registros sistemáticos para asegurar que la empresa cumpla con sus obligaciones legales, pague sus impuestos correctamente y mantenga las puertas abiertas al financiamiento externo. Por su parte, la contabilidad administrativa toma esos mismos datos financieros, los combina con variables operativas y los transforma en el tablero de control que permite a los líderes empresariales dirigir el barco con precisión técnica hacia la rentabilidad sostenida.</p>
+      </div>
+    </section>
+
+    <!-- BLOQUE 2: RENTABILIDAD Y EFICIENCIA -->
+    <section id="rentabilidad" class="tab-content">
+      <div class="card">
+        <div class="card-header-with-logo">
+          <h2>2. Métodos de Medición de Rentabilidad y Eficiencia</h2>
+          <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg/1280px-Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg.png?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=thumbnail" alt="Escudo UMG" class="card-logo">
+        </div>
+        <div class="calc-grid">
+          <div>
+            <h3>Calculadora de Ratios</h3>
+            <div class="form-group">
+              <label>Ventas Totales (Q)</label>
+              <input type="number" id="rentVentas" value="300000">
+            </div>
+            <div class="form-group">
+              <label>Utilidad Neta (Q)</label>
+              <input type="number" id="rentUtilidad" value="60000">
+            </div>
+            <div class="form-group">
+              <label>Activos Totales (Q)</label>
+              <input type="number" id="rentActivos" value="200000">
+            </div>
+            <button class="btn-calc" id="btnRentabilidad">Calcular Ratios</button>
+          </div>
+          <div>
+            <div id="resRentabilidad" class="result-box">Pulse el botón para obtener los resultados.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOQUE 3: FLUJO DE EFECTIVO -->
+    <section id="flujo" class="tab-content">
+      <div class="card">
+        <div class="card-header-with-logo">
+          <h2>3. Análisis del Flujo de Efectivo</h2>
+          <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg/1280px-Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg.png?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=thumbnail" alt="Escudo UMG" class="card-logo">
+        </div>
+        <div class="calc-grid">
+          <div>
+            <h3>Simulador de Liquidez</h3>
+            <div class="form-group">
+              <label>Flujo Operativo (Q)</label>
+              <input type="number" id="flujoOp" value="95000">
+            </div>
+            <div class="form-group">
+              <label>Flujo de Inversión (Q)</label>
+              <input type="number" id="flujoInv" value="-35000">
+            </div>
+            <div class="form-group">
+              <label>Flujo de Financiamiento (Q)</label>
+              <input type="number" id="flujoFin" value="-20000">
+            </div>
+            <button class="btn-calc" id="btnFlujo">Calcular Flujo Neto</button>
+          </div>
+          <div>
+            <div id="resFlujo" class="result-box">Pulse el botón para evaluar la caja.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOQUE 4: COMPRAR VS PRODUCIR -->
+    <section id="comprar" class="tab-content">
+      <div class="card">
+        <div class="card-header-with-logo">
+          <h2>4. Decisiones Gerenciales: Comprar o Producir</h2>
+          <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg/1280px-Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg.png?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=thumbnail" alt="Escudo UMG" class="card-logo">
+        </div>
+        <div class="calc-grid">
+          <div>
+            <h3>Parámetros</h3>
+            <div class="form-group">
+              <label>Unidades Requeridas</label>
+              <input type="number" id="cpCant" value="5000">
+            </div>
+            <div class="form-group">
+              <label>Costos Fijos Totales (Q)</label>
+              <input type="number" id="cpCF" value="15000">
+            </div>
+            <div class="form-group">
+              <label>Costo Variable Unitario (Q)</label>
+              <input type="number" id="cpCVU" value="11">
+            </div>
+            <div class="form-group">
+              <label>Precio Unitario de Proveedor (Q)</label>
+              <input type="number" id="cpPProv" value="15">
+            </div>
+            <button class="btn-calc" id="btnCP">Evaluar Alternativa</button>
+          </div>
+          <div>
+            <div id="resCP" class="result-box">Pulse el botón para ver la recomendación.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOQUE 5: ANÁLISIS PATRIMONIAL -->
+    <section id="patrimonial" class="tab-content">
+      <div class="card">
+        <div class="card-header-with-logo">
+          <h2>5. Análisis Patrimonial y Solvencia</h2>
+          <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg/1280px-Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg.png?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=thumbnail" alt="Escudo UMG" class="card-logo">
+        </div>
+        <div class="calc-grid">
+          <div>
+            <h3>Estructura</h3>
+            <div class="form-group">
+              <label>Activo Total (Q)</label>
+              <input type="number" id="patActivo" value="600000">
+            </div>
+            <div class="form-group">
+              <label>Pasivo Total (Q)</label>
+              <input type="number" id="patPasivo" value="220000">
+            </div>
+            <button class="btn-calc" id="btnPatrimonio">Analizar Autonomía</button>
+          </div>
+          <div>
+            <div id="resPatrimonio" class="result-box">Pulse el botón para calcular solvencia.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOQUE 6: VAN Y TIR -->
+    <section id="proyeccion" class="tab-content">
+      <div class="card">
+        <div class="card-header-with-logo">
+          <h2>6. Evaluación de Proyectos: VAN y TIR</h2>
+          <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg/1280px-Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg.png?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=thumbnail" alt="Escudo UMG" class="card-logo">
+        </div>
+        <div class="calc-grid">
+          <div>
+            <h3>Inversión</h3>
+            <div class="form-group">
+              <label>Inversión Inicial I₀ (Q)</label>
+              <input type="number" id="vanInv" value="150000">
+            </div>
+            <div class="form-group">
+              <label>Tasa de Descuento (k %)</label>
+              <input type="number" id="vanTasa" value="10">
+            </div>
+            <div class="form-group">
+              <label>Flujo Anual Promedio (Q)</label>
+              <input type="number" id="vanFlujo" value="50000">
+            </div>
+            <div class="form-group">
+              <label>Duración (Años)</label>
+              <input type="number" id="vanAnios" value="4">
+            </div>
+            <button class="btn-calc" id="btnVAN">Evaluar Proyecto</button>
+          </div>
+          <div>
+            <div id="resVANTIR" class="result-box">Pulse el botón para calcular VAN.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOQUE 7: ANEXOS Y EVIDENCIA DE VIDA UNIVERSITARIA -->
+    <section id="anexos" class="tab-content">
+      <div class="card">
+        <div class="card-header-with-logo">
+          <h2>7. Anexos y Evidencia de Vida Universitaria</h2>
+          <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg/1280px-Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg.png?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=thumbnail" alt="Escudo UMG" class="card-logo">
+        </div>
+
+        <p>En cumplimiento del <strong>Inciso III (Evidencia de Vida Universitaria)</strong>, se presenta la evidencia fotográfica de la participación individual en los eventos institucionales oficiales de la Universidad Mariano Gálvez de Guatemala durante el presente ciclo académico:</p>
+
+        <div class="gallery-grid">
+          <div class="gallery-card">
+            <h3>🎉 1. Aniversario UMG</h3>
+            <img id="imgAniversario" class="gallery-img" src="aniversario.jpeg" alt="Aniversario UMG">
+            <p><strong>Participación Grupal:</strong> Actividad conmemorativa del Aniversario Institucional UMG[cite: 4].</p>
+            <input type="file" id="fileAniversario" style="display:none;" accept="image/*">
+            <button class="upload-btn" onclick="document.getElementById('fileAniversario').click()">Subir/Cambiar Foto</button>
+          </div>
+
+          <div class="gallery-card">
+            <h3>🎓 2. Convención UMG (Ponencia)</h3>
+            <img id="imgConvencion1" class="gallery-img" src="convencion2.jpeg" alt="Convención UMG Ponencia">
+            <p><strong>Asistencia Académica:</strong> Participación en la Convención "20 Años, Una Misma Pasión"[cite: 3].</p>
+            <input type="file" id="fileConvencion1" style="display:none;" accept="image/*">
+            <button class="upload-btn" onclick="document.getElementById('fileConvencion1').click()">Subir/Cambiar Foto</button>
+          </div>
+
+          <div class="gallery-card">
+            <h3>👥 3. Convención UMG (Estudiantes)</h3>
+            <img id="imgConvencion2" class="gallery-img" src="convencion.jpeg" alt="Convención UMG Grupo">
+            <p><strong>Integración Universitaria:</strong> Fotografía oficial con compañeros en las instalaciones UMG[cite: 5].</p>
+            <input type="file" id="fileConvencion2" style="display:none;" accept="image/*">
+            <button class="upload-btn" onclick="document.getElementById('fileConvencion2').click()">Subir/Cambiar Foto</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- PIE DE PÁGINA -->
+  <footer>
+    <div class="footer-content">
+      <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg/1280px-Escudo_de_la_universidad_Mariano_G%C3%A1lvez_Guatemala.svg.png?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=thumbnail" alt="Escudo UMG" class="footer-logo">
+      <p>© 2026 Universidad Mariano Gálvez de Guatemala • Contabilidad Administrativa</p>
+      <p style="font-size: 13px; color: #CBD5E1;">Recurso Académico Digital • Facultad de Ingeniería en Sistemas</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Navegación por pestañas
+      const navButtons = document.querySelectorAll('.nav-btn');
+      const tabContents = document.querySelectorAll('.tab-content');
+
+      navButtons.forEach(button => {
+        button.addEventListener('click', function () {
+          const targetId = this.getAttribute('data-target');
+
+          navButtons.forEach(btn => btn.classList.remove('active'));
+          tabContents.forEach(content => content.classList.remove('active'));
+
+          this.classList.add('active');
+          const targetTab = document.getElementById(targetId);
+          if (targetTab) {
+            targetTab.classList.add('active');
+          }
+        });
+      });
+
+      // Subida de imágenes dinámica
+      function setupImageUpload(fileInputId, imgElementId) {
+        document.getElementById(fileInputId).addEventListener('change', function(e) {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              document.getElementById(imgElementId).src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+          }
+        });
+      }
+
+      setupImageUpload('fileAniversario', 'imgAniversario');
+      setupImageUpload('fileConvencion1', 'imgConvencion1');
+      setupImageUpload('fileConvencion2', 'imgConvencion2');
+
+      // Funciones de cálculo
+      document.getElementById('btnRentabilidad').addEventListener('click', function() {
+        const v = parseFloat(document.getElementById('rentVentas').value) || 0;
+        const u = parseFloat(document.getElementById('rentUtilidad').value) || 0;
+        const a = parseFloat(document.getElementById('rentActivos').value) || 0;
+        const box = document.getElementById('resRentabilidad');
+
+        if (v <= 0 || a <= 0) {
+          box.innerHTML = "⚠️ Ingrese valores mayores a 0.";
+          return;
+        }
+
+        const margen = (u / v) * 100;
+        const roa = (u / a) * 100;
+
+        box.innerHTML = "<strong>Resultados Obtenidos:</strong><br>" +
+          "• Margen Neto: <strong>" + margen.toFixed(2) + "%</strong><br>" +
+          "• ROA (Retorno sobre Activos): <strong>" + roa.toFixed(2) + "%</strong>";
+      });
+
+      document.getElementById('btnFlujo').addEventListener('click', function() {
+        const op = parseFloat(document.getElementById('flujoOp').value) || 0;
+        const inv = parseFloat(document.getElementById('flujoInv').value) || 0;
+        const fin = parseFloat(document.getElementById('flujoFin').value) || 0;
+        const box = document.getElementById('resFlujo');
+
+        const neto = op + inv + fin;
+        box.innerHTML = "<strong>Estado del Flujo Neto de Caja:</strong><br>" +
+          "• Resultado Neto: <strong>Q" + neto.toFixed(2) + "</strong><br>" +
+          (neto >= 0 ? "🟢 La caja se mantiene con superávit." : "🔴 Se registra un déficit de efectivo.");
+      });
+
+      document.getElementById('btnCP').addEventListener('click', function() {
+        const cant = parseFloat(document.getElementById('cpCant').value) || 0;
+        const cf = parseFloat(document.getElementById('cpCF').value) || 0;
+        const cvu = parseFloat(document.getElementById('cpCVU').value) || 0;
+        const pProv = parseFloat(document.getElementById('cpPProv').value) || 0;
+        const box = document.getElementById('resCP');
+
+        const costoProducir = cf + (cant * cvu);
+        const costoComprar = cant * pProv;
+
+        let dictamen = "";
+        if (costoProducir < costoComprar) {
+          dictamen = "🏭 <strong>Conviene PRODUCIR INTERNAMENTE.</strong> Ahorro estimado: Q" + (costoComprar - costoProducir).toFixed(2);
+        } else {
+          dictamen = "🛒 <strong>Conviene COMPRAR AL PROVEEDOR.</strong> Ahorro estimado: Q" + (costoProducir - costoComprar).toFixed(2);
+        }
+
+        box.innerHTML = "• Costo de Producir: Q" + costoProducir.toFixed(2) + "<br>" +
+          "• Costo de Comprar: Q" + costoComprar.toFixed(2) + "<br><br>" + dictamen;
+      });
+
+      document.getElementById('btnPatrimonio').addEventListener('click', function() {
+        const activo = parseFloat(document.getElementById('patActivo').value) || 0;
+        const pasivo = parseFloat(document.getElementById('patPasivo').value) || 0;
+        const box = document.getElementById('resPatrimonio');
+
+        if (activo <= 0) {
+          box.innerHTML = "⚠️ El activo debe ser mayor a cero.";
+          return;
+        }
+
+        const patrimonio = activo - pasivo;
+        const autonomia = (patrimonio / activo) * 100;
+        const endeudamiento = (pasivo / activo) * 100;
+
+        box.innerHTML = "• Patrimonio Neto: <strong>Q" + patrimonio.toFixed(2) + "</strong><br>" +
+          "• Autonomía Financiera: <strong>" + autonomia.toFixed(2) + "%</strong><br>" +
+          "• Nivel de Endeudamiento: <strong>" + endeudamiento.toFixed(2) + "%</strong>";
+      });
+
+      document.getElementById('btnVAN').addEventListener('click', function() {
+        const inv = parseFloat(document.getElementById('vanInv').value) || 0;
+        const tasa = (parseFloat(document.getElementById('vanTasa').value) || 0) / 100;
+        const flujo = parseFloat(document.getElementById('vanFlujo').value) || 0;
+        const anios = parseInt(document.getElementById('vanAnios').value) || 0;
+        const box = document.getElementById('resVANTIR');
+
+        let van = -inv;
+        for (let i = 1; i <= anios; i++) {
+          van += flujo / Math.pow(1 + tasa, i);
+        }
+
+        box.innerHTML = "• Valor Actual Neto (VAN): <strong>Q" + van.toFixed(2) + "</strong><br><br>" +
+          (van > 0 ? "🟢 <strong>PROYECTO VIABLE:</strong> Genera rendimiento superior a la tasa exigida." : "🔴 <strong>NO RECOMENDADO:</strong> El proyecto destruye valor económico.");
+      });
+    });
+  </script>
+</body>
+</html>
